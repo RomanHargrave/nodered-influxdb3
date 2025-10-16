@@ -115,8 +115,12 @@ module.exports = function(RED) {
                     tags      ||= {};
                     timestamp ||= msg.timestamp;
 
-                    if (typeof fields !== 'object') {
+                    if (!fields || typeof fields !== 'object') {
                         fields = remainder;
+                    }
+
+                    if (!fields || typeof fields !== 'object') {
+                        throw new Error("`msg.payload.fields` must be an object or unset");
                     }
 
                     if (typeof timestamp === 'number') {
